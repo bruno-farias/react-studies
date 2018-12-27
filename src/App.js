@@ -1,25 +1,47 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Validation from './ValidationComponent/ValidationComponent'
+import Char from './CharComponent/CharComponent'
 import './App.css';
 
 class App extends Component {
+  state = {
+    text: ''
+  }
+
+  textLengthCounterHandler = (event) => {
+    this.setState({text: event.target.value})
+  }
+
+  removeCharHandler = (textIndex) => {
+    const text = [...this.state.text]
+    console.log({textIndex})
+    text.splice(textIndex, 1)
+    this.setState({text: text.join('')})
+
+  }
+
   render() {
+
+    let chars = null
+    const textValue = this.state.text.split('') || []
+
+    if (textValue.length > 0) {
+      chars = (
+        <div>
+          {textValue.map((char, index) => {
+            return <Char letter={char} key={index} click={() => this.removeCharHandler(index)} />
+          })}
+        </div>
+      )
+    }
+
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <label htmlFor="text">Enter a text</label>
+        <p><input type="text" id="text" value={this.state.text} onChange={(event) => this.textLengthCounterHandler(event)}/></p>
+        <p>word have {this.state.text.length} characters</p>
+        <Validation size={this.state.text.length}/>
+        {chars}
       </div>
     );
   }
