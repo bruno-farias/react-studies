@@ -16,13 +16,13 @@ const cockpit = (props) => {
   }
 
   return (
-    <>
+    <Aux>
       <h1>{props.appTitle}</h1>
       <p className={assignedClasses.join(' ')}>This is really working!</p>
       <button
         className={btnClass}
         onClick={props.clicked}>Toggle Persons</button>
-    </>
+    </Aux>
   )
 }
 
